@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/ShroudedDeveloper.unity
+- path: Assets/Scenes/Gorz.unity
   isLoaded: 1
   isActive: 1
