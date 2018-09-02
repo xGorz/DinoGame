@@ -720,9 +720,10 @@ GameObject:
   - component: {fileID: 1862398298}
   - component: {fileID: 1862398297}
   - component: {fileID: 1862398296}
+  - component: {fileID: 1862398302}
   - component: {fileID: 1862398300}
   - component: {fileID: 1862398301}
-  - component: {fileID: 1862398302}
+  - component: {fileID: 1862398303}
   m_Layer: 0
   m_Name: BluePlayer
   m_TagString: Player
@@ -877,6 +878,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1862398303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1862398295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 167cba6967300e94f9580e79bac7c17d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  jumpSpeed: 3.3
+  facingRight: 1
+  isJumping: 0
+  maxJumpTime: 0.2
 --- !u!1 &1975401385
 GameObject:
   m_ObjectHideFlags: 0
