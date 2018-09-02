@@ -34,14 +34,35 @@ public class PlayerController : MonoBehaviour {
         Vector2 vector = rb.velocity;               //Vector of Player
         rb.velocity = new Vector2(horzMove * speed, vector.y);
 
-        if(rb.velocity != new Vector2(0, 0))
+        if(rb.velocity != new Vector2(0, 0))        //animation control for walking
         {
             animator.SetBool("Walking", true);
+            animator.SetFloat("Speed", Mathf.Abs(horzMove));
         }
         else if(rb.velocity == new Vector2(0,0))
         {
             animator.SetBool("Walking", false);
+            animator.SetFloat("Speed", Mathf.Abs(horzMove));
         }
+
+      /*  if ((horzMove * speed) >= 4)      //animation control for running ---not working yet--- and better as game mechanic
+        {
+            animator.SetBool("Running", true);
+            animator.SetFloat("Speed", 6);
+        }
+        else if ((horzMove * speed) < 4 && (horzMove * speed) > 0)
+        {
+            animator.SetBool("Running", false);
+            animator.SetFloat("Speed", 4);
+        }
+        else if((horzMove * speed) < 4 && (horzMove * speed) == 0)
+        {
+            animator.SetBool("Running", false);
+            animator.SetFloat("Speed", 4);
+        }*/
+
+
+
         if (horzMove > 0 && !facingRight)
         {
             Flip();                            //when facing left, flip character
