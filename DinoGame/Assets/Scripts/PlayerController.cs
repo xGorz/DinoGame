@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
     private Animator animator;                      //following declared variables for collisionobjects from Player
-    private SpriteRenderer sr;
+    //private SpriteRenderer sr;
     private Rigidbody2D rb;
 
-    [Range(1,10)]                                   //following declared variables for speed customization
+    [Range(1, 10)]                                   //following declared variables for speed customization
     public float speed;                             //x-axis
-    [Range(1, 10)] 
+    [Range(1, 10)]
     public float jumpSpeed;                         //y-axis
 
     public bool facingRight = true;                 //following declared variables for different states
     public bool isJumping = false;
     private float jumpButtonPressTime;              // How long is the jump button held
-    public float  maxJumpTime = 0.2f;               //Max Jump amount
+    public float maxJumpTime = 0.2f;               //Max Jump amount
 
     private float rayCastLength = 0.005f;           //following declared variables for Raycastingcollision
     private float width;                            // Sprite width and height
@@ -23,9 +24,10 @@ public class PlayerController : MonoBehaviour {
     public float toggleDown;
 
     //without a public void Start() because we use Awake()
-	
-	// Update is called once per frame
-	void FixedUpdate () {
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
         float horzMove = Input.GetAxisRaw("Horizontal");
         float vertMove = Input.GetAxis("Jump");
 
@@ -34,35 +36,28 @@ public class PlayerController : MonoBehaviour {
         Vector2 vector = rb.velocity;               //Vector of Player
         rb.velocity = new Vector2(horzMove * speed, vector.y);
 
-        if(rb.velocity != new Vector2(0, 0))        //animation control for walking
+        if (rb.velocity != new Vector2(0, 0))        //animation control for walking
         {
             animator.SetBool("Walking", true);
             animator.SetFloat("Speed", Mathf.Abs(horzMove));
         }
-        else if(rb.velocity == new Vector2(0,0))
+        else if (rb.velocity == new Vector2(0, 0))
         {
             animator.SetBool("Walking", false);
             animator.SetFloat("Speed", Mathf.Abs(horzMove));
         }
 
-      /*  if ((horzMove * speed) >= 4)      //animation control for running ---not working yet--- and better as game mechanic
+        //Duck mechanic, TO FIX: Ducking while Movement and Ducking without Movement
+        if (FeetOnGround() == true && (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)))
         {
-            animator.SetBool("Running", true);
-            animator.SetFloat("Speed", 6);
+            animator.SetBool("Ducking", true);
         }
-        else if ((horzMove * speed) < 4 && (horzMove * speed) > 0)
+        else
         {
-            animator.SetBool("Running", false);
-            animator.SetFloat("Speed", 4);
+            animator.SetBool("Ducking", false);
         }
-        else if((horzMove * speed) < 4 && (horzMove * speed) == 0)
-        {
-            animator.SetBool("Running", false);
-            animator.SetFloat("Speed", 4);
-        }*/
 
-
-
+        //flipping
         if (horzMove > 0 && !facingRight)
         {
             Flip();                            //when facing left, flip character
@@ -70,7 +65,7 @@ public class PlayerController : MonoBehaviour {
         else if (horzMove < 0 && facingRight)
         {
             Flip();
-        }        
+        }
 
         if (IsOnGround() && isJumping == false)
         {
@@ -106,10 +101,10 @@ public class PlayerController : MonoBehaviour {
 
     }
 
-   
+
     void Awake()
     {   //standard declaring
-        sr = GetComponent<SpriteRenderer>();
+       // sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         //Raycast declared variables
@@ -154,5 +149,16 @@ public class PlayerController : MonoBehaviour {
 
         return false;
 
+    }
+
+    public bool FeetOnGround()
+    {
+
+        bool groundCheck = Physics2D.Raycast(new Vector2(
+                                transform.position.x,
+                                transform.position.y - height),
+                                -Vector2.up, rayCastLength);
+
+        return groundCheck;
     }
 }

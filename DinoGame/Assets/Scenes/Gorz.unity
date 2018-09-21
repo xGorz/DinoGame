@@ -894,6 +894,7 @@ MonoBehaviour:
   facingRight: 1
   isJumping: 0
   maxJumpTime: 0.2
+  toggleDown: 0
 --- !u!1 &1975401385
 GameObject:
   m_ObjectHideFlags: 0
