@@ -1448,7 +1448,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.18, y: 0.13}
+    oldSize: {x: 0.15, y: 0.17}
     newSize: {x: 0.15, y: 0.17}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -2007,7 +2007,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
