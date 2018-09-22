@@ -14,6 +14,7 @@ TagManager:
   - 
   - 
   - Terrain
+  - MiddleGround
   - Background
   - 
   - 
@@ -36,8 +37,19 @@ TagManager:
   - 
   - 
   - 
-  - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 88996819
+    locked: 0
+  - name: Midground
+    uniqueID: 265928877
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Character
+    uniqueID: 903190389
+    locked: 0
+  - name: Foreground
+    uniqueID: 2066618509
     locked: 0

@@ -40,24 +40,41 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("Walking", true);
             animator.SetFloat("Speed", Mathf.Abs(horzMove));
+
+            //ducking while moving
+            if (FeetOnGround() == true && (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)))
+            {
+                animator.SetBool("Walking", false);
+                animator.SetBool("Ducking", true);
+            }
+            else if (FeetOnGround() == false || (!Input.GetKey(KeyCode.DownArrow) || !Input.GetKey(KeyCode.S)))
+            {
+                animator.SetBool("Ducking", false);
+                animator.SetBool("Walking", true);
+            }
         }
+
         else if (rb.velocity == new Vector2(0, 0))
         {
+            animator.SetBool("Ducking", false);
             animator.SetBool("Walking", false);
             animator.SetFloat("Speed", Mathf.Abs(horzMove));
+
+            //IdleDucking, TO FIX: Inputs for down
+            if (FeetOnGround() == true && (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)))
+            {
+                animator.SetBool("IdleDucking", true);
+                animator.SetFloat("Speed", Mathf.Abs(horzMove));
+            }
+            else if(FeetOnGround() == false || (!Input.GetKey(KeyCode.DownArrow) || !Input.GetKey(KeyCode.S)))
+            {
+                animator.SetBool("IdleDucking", false);
+                animator.SetFloat("Speed", Mathf.Abs(horzMove));
+            }
+
         }
 
-        //Duck mechanic, TO FIX: Ducking while Movement and Ducking without Movement
-        if (FeetOnGround() == true && (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)))
-        {
-            animator.SetBool("Ducking", true);
-        }
-        else
-        {
-            animator.SetBool("Ducking", false);
-        }
-
-        //flipping
+        //Flipping
         if (horzMove > 0 && !facingRight)
         {
             Flip();                            //when facing left, flip character
@@ -154,11 +171,7 @@ public class PlayerController : MonoBehaviour
     public bool FeetOnGround()
     {
 
-        bool groundCheck = Physics2D.Raycast(new Vector2(
-                                transform.position.x,
-                                transform.position.y - height),
-                                -Vector2.up, rayCastLength);
-
+        bool groundCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - height), -Vector2.up, rayCastLength);
         return groundCheck;
     }
 }
