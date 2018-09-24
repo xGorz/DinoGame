@@ -21,8 +21,8 @@ public class PlayerController : MonoBehaviour
     private float jumpButtonPressTime;              // How long is the jump button held
     public float maxJumpTime = 0.005f;               //Max Jump amount
 
-    private float rayCastLength = 0.005f;           //following declared variables for Raycastingcollision
-    private float width;                            // Sprite width and height
+    private float rayCastLength = 5f;           //following declared variables for Raycastingcollision
+    private float width;                          // Sprite width and height
     private float height;
     public float toggleDown;
 
