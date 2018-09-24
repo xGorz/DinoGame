@@ -12,11 +12,14 @@ public class PlayerController : MonoBehaviour
     public float speed;                             //x-axis
     [Range(1, 10)]
     public float jumpSpeed;                         //y-axis
+    public GameObject player;
+    public Collider2D head;
+    private TeamAssignment team;
 
     public bool facingRight = true;                 //following declared variables for different states
     public bool isJumping = false;
     private float jumpButtonPressTime;              // How long is the jump button held
-    public float maxJumpTime = 0.2f;               //Max Jump amount
+    public float maxJumpTime = 0.005f;               //Max Jump amount
 
     private float rayCastLength = 0.005f;           //following declared variables for Raycastingcollision
     private float width;                            // Sprite width and height
@@ -24,6 +27,16 @@ public class PlayerController : MonoBehaviour
     public float toggleDown;
 
     //without a public void Start() because we use Awake()
+    void Awake()
+    {   //standard declaring
+        // sr = GetComponent<SpriteRenderer>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        //Raycast declared variables
+        width = GetComponent<Collider2D>().bounds.extents.x + 0.1f;
+        height = GetComponent<Collider2D>().bounds.extents.y + 0.2f;
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -66,7 +79,7 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("IdleDucking", true);
                 animator.SetFloat("Speed", Mathf.Abs(horzMove));
             }
-            else if(FeetOnGround() == false || (!Input.GetKey(KeyCode.DownArrow) || !Input.GetKey(KeyCode.S)))
+            else if (FeetOnGround() == false || (!Input.GetKey(KeyCode.DownArrow) || !Input.GetKey(KeyCode.S)))
             {
                 animator.SetBool("IdleDucking", false);
                 animator.SetFloat("Speed", Mathf.Abs(horzMove));
@@ -117,16 +130,14 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-
-
-    void Awake()
-    {   //standard declaring
-       // sr = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
-        //Raycast declared variables
-        width = GetComponent<Collider2D>().bounds.extents.x + 0.1f;
-        height = GetComponent<Collider2D>().bounds.extents.y + 0.2f;
+    //idea: when head collides with ground: adjust player position to get him on his feet
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground") || (team.teamAssignment != collision.gameObject.GetComponent<TeamAssignment>().teamAssignment))
+        {
+            player.transform.SetPositionAndRotation(new Vector3(1, 1, 1), new Quaternion(0, 0, 0, 0));
+            Debug.Log("hello");
+        }
     }
 
     // When moving in a direction face in that direction
@@ -170,7 +181,6 @@ public class PlayerController : MonoBehaviour
 
     public bool FeetOnGround()
     {
-
         bool groundCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - height), -Vector2.up, rayCastLength);
         return groundCheck;
     }
